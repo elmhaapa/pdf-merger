@@ -140,56 +140,58 @@ function App() {
         style={{
           width: '800px',
           backgroundColor: 'white',
-          marginTop: '50px',
           marginBottom: '50px',
           fontSize: '32px',
           display: 'flex',
           flexDirection: 'column'
         }}
       >
-        <ul style={{
-          marginBottom: '100px'
-        }}>
-          {state.pdfs.map((pdf, k) => {
-            return (<li key={k}>{pdf.name}</li>)
-          })}
-        </ul>
         <div
           style={{
-            position: 'relative',
-            width: '100%',
-            height: '100px'
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
           }}
         >
-        <div className="toggle"
-          onClick={() => {
-            setState(prevState => ({...prevState, pageNumbering: !prevState.pageNumbering}))
-          }}
-        >
-          <input type="checkbox" className="check" />
-          <b className="b switch"></b>
-          <b className="b track"></b>
-        </div>
-        <p style={{ 
-          color: 'grey',
-          position: 'absolute',
-          top: '-20%',
-          left: '15%'
-        }}>Set page numbers</p>
+          <div
+            style={{
+              position: 'relative',
+              width: '60px',
+              height: '40px'
+            }}
+          >
+            <div className="toggle"
+              onClick={() => {
+                setState(prevState => ({...prevState, pageNumbering: !prevState.pageNumbering}))
+              }}
+            >
+              <input type="checkbox" className="check" />
+              <b className="b switch"></b>
+              <b className="b track"></b>
+            </div>
+          </div>
+          <p
+            style={{
+              fontSize: '32px',
+              marginLeft: '10px',
+              color: state.pageNumbering ? 'black' : 'grey'
+            }}
+          >Page numbers</p>
         </div>
         {state.pageNumbering ? (
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              fontSize: '32px'
+              fontSize: '32px',
+              marginBottom: '50px'
             }}
           >
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginLeft: '100px'
+                marginLeft: '70px'
               }}
             >
               <span>Font Size: </span> 
@@ -198,7 +200,25 @@ function App() {
                   height: '40px',
                   marginLeft: '10px',
                   fontSize: '32px',
-                  width: '100px',
+                  width: '150px',
+                  borderRadius: '4px'
+                }}
+                type='range'
+                min="0"
+                max="150"
+                step="1"
+                value={state.fontSize}
+                onChange={(e) => {
+                  const val = e.target.value
+                  setState(prevState => ({...prevState, fontSize: Number(val) }))
+                }} 
+              />
+              <input 
+                style={{ 
+                  height: '40px',
+                  marginLeft: '10px',
+                  fontSize: '32px',
+                  width: '70px',
                   borderRadius: '4px'
                 }}
                 type='number'
@@ -213,7 +233,7 @@ function App() {
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginLeft: '100px',
+                marginLeft: '70px',
                 marginTop: '10px'
               }}
             >
@@ -221,9 +241,27 @@ function App() {
               <input 
                 style={{ 
                   height: '40px',
-                  marginLeft: '30px',
+                  marginLeft: '24px',
                   fontSize: '32px',
-                  width: '100px',
+                  width: '150px',
+                  borderRadius: '4px'
+                }}
+                type='range'
+                min="0"
+                max="150"
+                step="1"
+                value={state.xOffset}
+                onChange={(e) => {
+                  const val = e.target.value
+                  setState(prevState => ({...prevState, xOffset: Number(val) }))
+                }} 
+              />
+              <input 
+                style={{ 
+                  height: '40px',
+                  marginLeft: '10px',
+                  fontSize: '32px',
+                  width: '70px',
                   borderRadius: '4px'
                 }}
                 type='number'
@@ -238,7 +276,7 @@ function App() {
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginLeft: '100px',
+                marginLeft: '70px',
                 marginTop: '10px'
               }}
             >
@@ -246,9 +284,27 @@ function App() {
               <input 
                 style={{ 
                   height: '40px',
-                  marginLeft: '30px',
+                  marginLeft: '24px',
                   fontSize: '32px',
-                  width: '100px',
+                  width: '150px',
+                  borderRadius: '4px'
+                }}
+                type='range'
+                min="0"
+                max="150"
+                step="1"
+                value={state.yOffset}
+                onChange={(e) => {
+                  const val = e.target.value
+                  setState(prevState => ({...prevState, yOffset: Number(val) }))
+                }} 
+              />
+              <input 
+                style={{ 
+                  height: '40px',
+                  marginLeft: '10px',
+                  fontSize: '32px',
+                  width: '70px',
                   borderRadius: '4px'
                 }}
                 type='number'
@@ -263,9 +319,8 @@ function App() {
         ) : null}
         <div
           style={{
-            marginTop: '50px',
             display: 'flex',
-            justifyContent: 'space-evenly',
+            justifyContent: 'space-between',
             alignItems: 'center'
           }}
         >
@@ -280,7 +335,8 @@ function App() {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: '5px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              border: '1px solid rgba(27,31,35,.2)'
             }}
             onClick={() => {
               mergePdfs(state)
@@ -300,7 +356,8 @@ function App() {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: '5px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              border: '1px solid rgba(27,31,35,.2)'
             }}
             onClick={() => {
               setState(defaultState)
@@ -308,6 +365,22 @@ function App() {
           >
             Clear
           </div>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '50px',
+            marginBottom: '50px'
+          }}
+        >
+          <ul style={{
+          }}>
+            {state.pdfs.map((pdf, k) => {
+              return (<li key={k}>{pdf.name}</li>)
+            })}
+          </ul>
         </div>
       </div>) : null
       }
