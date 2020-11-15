@@ -3,7 +3,7 @@ import './App.css';
 import './toggle.css';
 
 import {useDropzone} from 'react-dropzone'
-import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver'
 
 const f = (files: any[], addPdf: (pdf: Pdf) => void) => {
@@ -31,6 +31,7 @@ const MyDropzone = (props: { addPdf: (pdf: Pdf) => void }) => {
 
     // Do something with the files
     f(acceptedFiles, props.addPdf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
