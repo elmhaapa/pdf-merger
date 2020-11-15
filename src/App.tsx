@@ -26,6 +26,9 @@ const f = (files: any[], addPdf: (pdf: Pdf) => void) => {
 
 const MyDropzone = (props: { addPdf: (pdf: Pdf) => void }) => {
   const onDrop = useCallback(acceptedFiles => {
+    // @ts-ignore
+    mixpanel.track("File dropped");
+
     // Do something with the files
     f(acceptedFiles, props.addPdf)
   }, [])
@@ -79,6 +82,9 @@ const mergePdfs = async (state: State) => {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
 
   if (state.pageNumbering) {
+    // @ts-ignore
+    mixpanel.track("Page numbering set");
+    
     const pages = pdfDoc.getPages()
     let pageCount = 1
     pages.forEach(page => {
@@ -95,6 +101,10 @@ const mergePdfs = async (state: State) => {
     })
   }
   const pdfBytes = await pdfDoc.save()
+  
+  // @ts-ignore
+  mixpanel.track("Pdf merged");
+
   saveAs(new Blob([pdfBytes],{type:"application/octet-stream"}), "merged.pdf")  
 }
 
@@ -112,6 +122,9 @@ type Pdf = {
 }
 const defaultState = { pdfs: [], fontSize: 12, xOffset: 20, yOffset: 20, pageNumbering: false }
 function App() {
+  // @ts-ignore
+  mixpanel.track("Page loaded");
+  
   const [state, setState] = useState<State>(defaultState)
   const addPdf = (pdf: Pdf) => setState(prevState => ({...prevState,pdfs: [...prevState.pdfs, pdf] }))
   return (
